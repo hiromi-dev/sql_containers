@@ -1,0 +1,22 @@
+version: "3"
+services:
+  db:
+    container_name: practice_sql
+    build: .
+    volumes:
+      - mysql-store:/var/lib/mysql
+      - ./logs:/var/log/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    ports:
+      - ${DB_PORT}:3306
+
+  db-testing:
+    image: mysql:8.0
+    container_name: practice_sql_test
+    volumes:
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    tmpfs:
+      - /var/lib/mysql
+      - /var/log/mysql
+volumes:
+  mysql-store:
